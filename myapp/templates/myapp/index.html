@@ -6,6 +6,10 @@
   <title>Document</title>
 </head>
 <body>
-  <h1>This is a template</h1>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="file" id="file">
+    <input type="submit" name="submit">
+  </form>
 </body>
 </html>
