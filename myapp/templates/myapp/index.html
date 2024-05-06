@@ -14,7 +14,7 @@
     <input class="bg-blue-500 text-white font-bold py-2 px-2 rounded" type="submit" name="submit">
   </form>
 
-  <table>
+  <table id="table">
     <thead>
       <tr>
         <th class="px-6 py-2 text-sm text-gray-500">Property Name</th>
@@ -42,5 +42,50 @@
       {% endfor %}
     </tbody>
   </table>
+  <script>
+    const table = document.getElementById("table");
+    let net_prices = 0;
+    let net_rent = 0;
+    let net_emi = 0;
+    let net_tax = 0;
+    let net_exp = 0;
+    let net_monthly_expense = 0;
+    let net_income = 0;
+
+    let total_prices = 0;
+    let total_rent = 0;
+    let total_emi = 0;
+    let total_tax = 0;
+    let total_exp = 0;
+    let total_monthly_expense = 0;
+    let total_income = 0;
+
+    for (let i = 1; i < table.rows.length; i++) {
+      net_prices = table.rows[i].cells[1].innerText;
+      net_rent = table.rows[i].cells[2].innerText;
+      net_emi = table.rows[i].cells[3].innerText;
+      net_tax = table.rows[i].cells[4].innerText;
+      net_exp = table.rows[i].cells[5].innerText;
+      net_monthly_expense = table.rows[i].cells[6].innerText;
+      net_income = table.rows[i].cells[7].innerText;
+
+      net_prices = +net_prices;
+      net_rent = +net_rent;
+      net_emi = +net_emi;
+      net_tax = +net_tax;
+      net_exp = +net_exp;
+      net_monthly_expense = +net_monthly_expense;
+      net_income = +net_income;
+
+      total_prices += net_prices;
+      total_rent += net_rent;
+      total_emi += net_emi;
+      total_tax += net_tax;
+      total_exp += net_exp;
+      total_monthly_expense += net_monthly_expense;
+      total_income += net_income;
+    }
+    console.log(total_prices, total_rent, total_emi, total_tax, total_exp, total_monthly_expense, total_income);
+  </script>
 </body>
 </html>
