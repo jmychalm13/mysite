@@ -27,7 +27,21 @@ def hello(request):
             emi = d["emi"]
             tax = d["tax"]
             exp = d["other_exp"]
-            dt = Data(name=name, price=price, rent=rent, emi=emi, tax=tax, exp=exp)
+            # calculating monthly expenses and income from existing data
+            expenses_monthly = emi + tax + exp
+            income_monthly = rent - expenses_monthly
+            dt = Data(
+                name=name,
+                price=price,
+                rent=rent,
+                emi=emi,
+                tax=tax,
+                exp=exp,
+                # adding new values to data
+                expenses_monthly=expenses_monthly,
+                income_monthly=income_monthly,
+            )
+            # saving object
             dt.save()
         # getting all data
         data_objects = Data.objects.all()
