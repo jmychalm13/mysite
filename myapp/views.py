@@ -8,13 +8,18 @@ import json
 # Create your views here.
 def hello(request):
     if request.method == "POST":
+        # getting any old data and deleting
         previous_data = Data.objects.all()
         previous_data.delete()
+        # getting files from html
         file = request.FILES["file"]
         df = pandas.read_csv(file)
+        # reorienting index
         json_records = df.reset_index().to_json(orient="records")
         data = []
+        # putting json data into a list to work with
         data = json.loads(json_records)
+        # looping through data
         for d in data:
             name = d["property_name"]
             price = d["property_price"]
@@ -24,6 +29,12 @@ def hello(request):
             exp = d["other_exp"]
             dt = Data(name=name, price=price, rent=rent, emi=emi, tax=tax, exp=exp)
             dt.save()
+        # getting all data
+        data_objects = Data.objects.all()
+        # setting data as context
+        context = {"data_objects": data_objects}
+        # returning data in views
+        return render(request, "myapp/index.html", context)
     else:
         print("This is a GET request")
     return render(request, "myapp/index.html")
