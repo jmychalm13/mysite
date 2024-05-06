@@ -11,6 +11,9 @@
     <input type="file" name="file" id="file">
     <input type="submit" name="submit">
   </form>
-  {{data_objects}}
+  {% for object in data_objects %}
+    {{object.name}} -> {{object.price}} -> {{object.rent}} -> {{object.emi}} -> {{object.tax}} -> {{object.exp}}
+    <br />
+  {% endfor %}
 </body>
 </html>
