@@ -40,6 +40,16 @@
         <td class="px-6 py-4 text-sm text-green-500">{{object.income_monthly}}</td>
       </tr>
       {% endfor %}
+      <tr>
+        <td class="px-6 py-4 text-sm text-gray-500 font-bold">Total</td>
+        <td id="totalPrice" class="px-6 py-4 text-sm text-green-500">0</td>
+        <td id="totalRent" class="px-6 py-4 text-sm text-green-500">0</td>
+        <td id="totalEmi" class="px-6 py-4 text-sm text-red-500">0</td>
+        <td id="totalTax" class="px-6 py-4 text-sm text-red-500">0</td>
+        <td id="totalExp" class="px-6 py-4 text-sm text-red-500">0</td>
+        <td id="totalExpense" class="px-6 py-4 text-sm text-red-500">0</td>
+        <td id="totalIncome" class="px-6 py-4 text-sm text-green-500">0</td>
+      </tr>
     </tbody>
   </table>
   <script>
@@ -60,7 +70,7 @@
     let total_monthly_expense = 0;
     let total_income = 0;
 
-    for (let i = 1; i < table.rows.length; i++) {
+    for (let i = 1; i < table.rows.length - 1; i++) {
       net_prices = table.rows[i].cells[1].innerText;
       net_rent = table.rows[i].cells[2].innerText;
       net_emi = table.rows[i].cells[3].innerText;
@@ -85,6 +95,14 @@
       total_monthly_expense += net_monthly_expense;
       total_income += net_income;
     }
+    document.getElementById("totalPrice").innerHTML = total_prices;
+    document.getElementById("totalRent").innerHTML = total_rent;
+    document.getElementById("totalEmi").innerHTML = total_emi;
+    document.getElementById("totalTax").innerHTML = total_tax;
+    document.getElementById("totalExp").innerHTML = total_exp;
+    document.getElementById("totalIncome").innerHTML = total_income;
+    document.getElementById("totalExpense").innerHTML = total_monthly_expense;
+
     console.log(total_prices, total_rent, total_emi, total_tax, total_exp, total_monthly_expense, total_income);
   </script>
 </body>
