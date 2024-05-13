@@ -138,6 +138,8 @@
     let net_taxes = [];
     let net_exps = [];
 
+    let net_rents = [];
+
     for (let i = 1; i < table.rows.length - 1; i++) {
       net_prices = table.rows[i].cells[1].innerText;
       net_rent = table.rows[i].cells[2].innerText;
@@ -283,6 +285,40 @@
         ],
         borderColor: [
           "rgba(255, 204, 255, 1)"
+        ],
+        borderWidth: 5
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+    });
+
+    const ctx4 = document.getElementById('incomeSpreadChart');
+    const incomeSpreadChart = new Chart(ctx4, {
+    type: 'doughnut',
+    data: {
+      labels: properties,
+      datasets: [{
+        label: 'Income in dollars',
+        data: net_incomes,
+        backgroundColor: [
+          "rgba(204, 255, 237, 0.7)",
+          "rgba(255, 204, 230, 0.7)",
+          "rgba(255, 204, 255, 0.7)",
+          "rgba(255, 229, 204, 0.7)",
+          "rgba(236, 192, 255, 0.7)",
+        ],
+        borderColor: [
+          "rgba(204, 255, 237, 1)",
+          "rgba(255, 204, 230, 1)",
+          "rgba(255, 204, 255, 1)",
+          "rgba(255, 229, 204, 1)",
+          "rgba(236, 192, 255, 1)",
         ],
         borderWidth: 5
       }]
