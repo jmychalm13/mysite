@@ -76,32 +76,19 @@
         </div>
       </div>
     </div>
-    <canvas id="myChart" width="400" height="400"></canvas>
-  </div> 
+  </br>
+  </div>
+  <div class="flex gap-8 m-10">
+    <div class="w-1/2">
+      <div class="bg-indigo-600 font-bold m-10">Income Chart</div>
+      <div>
+        <canvas width="400" height="400" id="myChart"></canvas>
+      </div>
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    const ctx = document.getElementById('myChart');
-
-    new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
     const table = document.getElementById("table");
     let net_prices = 0;
     let net_rent = 0;
@@ -111,6 +98,8 @@
     let net_monthly_expense = 0;
     let net_income = 0;
 
+    let property = "";
+
     let total_prices = 0;
     let total_rent = 0;
     let total_emi = 0;
@@ -118,6 +107,10 @@
     let total_exp = 0;
     let total_monthly_expense = 0;
     let total_income = 0;
+
+    // arrays for populating chart
+    let net_incomes = [];
+    let properties = [];
 
     for (let i = 1; i < table.rows.length - 1; i++) {
       net_prices = table.rows[i].cells[1].innerText;
@@ -127,6 +120,11 @@
       net_exp = table.rows[i].cells[5].innerText;
       net_monthly_expense = table.rows[i].cells[6].innerText;
       net_income = table.rows[i].cells[7].innerText;
+      property = table.rows[i].cells[0].innerText;
+
+
+      net_incomes.push(net_income);
+      properties.push(property[0].toUpperCase() + property.substr(1).toLowerCase());
 
       net_prices = +net_prices;
       net_rent = +net_rent;
@@ -151,6 +149,51 @@
     document.getElementById("totalExp").innerHTML = total_exp;
     document.getElementById("totalIncome").innerHTML = total_income;
     document.getElementById("totalExpense").innerHTML = total_monthly_expense;
+
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: properties,
+      datasets: [{
+        label: 'Income in dollars',
+        data: net_incomes,
+        backgroundColor: [
+          "rgba(236, 192, 255, 0.7)",
+          "rgba(204, 255, 237, 0.7)",
+          "rgba(255, 229, 204, 0.7)",
+          "rgba(204, 221, 255, 0.7)",
+          "rgba(255, 204, 230, 0.7)",
+          "rgba(204, 255, 255, 0.7)",
+          "rgba(255, 242, 204, 0.7)",
+          "rgba(255, 204, 204, 0.7)",
+          "rgba(204, 255, 204, 0.7)",
+          "rgba(255, 204, 255, 0.7)",
+        ],
+        borderColor: [
+          "rgba(236, 192, 255, 1)",
+          "rgba(204, 255, 237, 1)",
+          "rgba(255, 229, 204, 1)",
+          "rgba(204, 221, 255, 1)",
+          "rgba(255, 204, 230, 1)",
+          "rgba(204, 255, 255, 1)",
+          "rgba(255, 242, 204, 1)",
+          "rgba(255, 204, 204, 1)",
+          "rgba(204, 255, 204, 1)",
+          "rgba(255, 204, 255, 1)",
+        ],
+        borderWidth: 5
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+    });
   </script>
 </body>
 </html>
