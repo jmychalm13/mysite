@@ -80,9 +80,15 @@
   </div>
   <div class="flex gap-8 m-10">
     <div class="w-1/2">
-      <div class="bg-indigo-600 font-bold m-10">Income Chart</div>
+      <div class="bg-indigo-600 font-bold m-10 text-center">Income Chart</div>
       <div>
-        <canvas width="400" height="400" id="myChart"></canvas>
+        <canvas width="400" height="400" id="incomeChart"></canvas>
+      </div>
+    </div>
+    <div class="w-1/2">
+      <div class="bg-indigo-600 font-bold m-10">Expense Chart</div>
+      <div>
+        <canvas width="400" height="400" id="expenseChart"></canvas>
       </div>
     </div>
   </div>
@@ -109,8 +115,9 @@
     let total_income = 0;
 
     // arrays for populating chart
-    let net_incomes = [];
     let properties = [];
+    let net_incomes = [];
+    let net_monthly_expenses = [];
 
     for (let i = 1; i < table.rows.length - 1; i++) {
       net_prices = table.rows[i].cells[1].innerText;
@@ -124,6 +131,7 @@
 
 
       net_incomes.push(net_income);
+      net_monthly_expenses.push(net_monthly_expense);
       properties.push(property[0].toUpperCase() + property.substr(1).toLowerCase());
 
       net_prices = +net_prices;
@@ -150,7 +158,8 @@
     document.getElementById("totalIncome").innerHTML = total_income;
     document.getElementById("totalExpense").innerHTML = total_monthly_expense;
 
-    const ctx = document.getElementById('myChart');
+    const ctx = document.getElementById('incomeChart');
+    const ctx2 = document.getElementById('expenseChart');
 
     new Chart(ctx, {
     type: 'bar',
@@ -160,28 +169,51 @@
         label: 'Income in dollars',
         data: net_incomes,
         backgroundColor: [
-          "rgba(236, 192, 255, 0.7)",
           "rgba(204, 255, 237, 0.7)",
-          "rgba(255, 229, 204, 0.7)",
-          "rgba(204, 221, 255, 0.7)",
-          "rgba(255, 204, 230, 0.7)",
-          "rgba(204, 255, 255, 0.7)",
-          "rgba(255, 242, 204, 0.7)",
-          "rgba(255, 204, 204, 0.7)",
-          "rgba(204, 255, 204, 0.7)",
-          "rgba(255, 204, 255, 0.7)",
+          "rgba(204, 255, 237, 0.7)",
+          "rgba(204, 255, 237, 0.7)",
+          "rgba(204, 255, 237, 0.7)",
+          "rgba(204, 255, 237, 0.7)",
         ],
         borderColor: [
-          "rgba(236, 192, 255, 1)",
           "rgba(204, 255, 237, 1)",
-          "rgba(255, 229, 204, 1)",
-          "rgba(204, 221, 255, 1)",
+          "rgba(204, 255, 237, 1)",
+          "rgba(204, 255, 237, 1)",
+          "rgba(204, 255, 237, 1)",
+          "rgba(204, 255, 237, 1)",
+        ],
+        borderWidth: 5
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+    });
+
+    new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: properties,
+      datasets: [{
+        label: 'Net expenses in dollars',
+        data: net_monthly_expenses,
+        backgroundColor: [
+          "rgba(255, 204, 230, 0.7)",
+          "rgba(255, 204, 230, 0.7)",
+          "rgba(255, 204, 230, 0.7)",
+          "rgba(255, 204, 230, 0.7)",
+          "rgba(255, 204, 230, 0.7)",
+        ],
+        borderColor: [
           "rgba(255, 204, 230, 1)",
-          "rgba(204, 255, 255, 1)",
-          "rgba(255, 242, 204, 1)",
-          "rgba(255, 204, 204, 1)",
-          "rgba(204, 255, 204, 1)",
-          "rgba(255, 204, 255, 1)",
+          "rgba(255, 204, 230, 1)",
+          "rgba(255, 204, 230, 1)",
+          "rgba(255, 204, 230, 1)",
+          "rgba(255, 204, 230, 1)",
         ],
         borderWidth: 5
       }]
