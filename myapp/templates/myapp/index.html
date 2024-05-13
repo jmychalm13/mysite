@@ -93,6 +93,21 @@
     </div>
   </div>
 
+  <div class="flex gap-8 m-10">
+    <div class="w-1/2">
+      <div class="bg-indigo-600 font-bold m-10 text-center">Expense Spread Chart</div>
+      <div>
+        <canvas width="400" height="400" id="expenseSpreadChart"></canvas>
+      </div>
+    </div>
+    <div class="w-1/2">
+      <div class="bg-indigo-600 font-bold m-10">Income Spread Chart</div>
+      <div>
+        <canvas width="400" height="400" id="incomeSpreadChart"></canvas>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     const table = document.getElementById("table");
@@ -119,6 +134,10 @@
     let net_incomes = [];
     let net_monthly_expenses = [];
 
+    let net_emis = []
+    let net_taxes = [];
+    let net_exps = [];
+
     for (let i = 1; i < table.rows.length - 1; i++) {
       net_prices = table.rows[i].cells[1].innerText;
       net_rent = table.rows[i].cells[2].innerText;
@@ -132,6 +151,9 @@
 
       net_incomes.push(net_income);
       net_monthly_expenses.push(net_monthly_expense);
+      net_emis.push(net_emi);
+      net_taxes.push(net_tax);
+      net_exps.push(net_exp);
       properties.push(property[0].toUpperCase() + property.substr(1).toLowerCase());
 
       net_prices = +net_prices;
@@ -159,9 +181,7 @@
     document.getElementById("totalExpense").innerHTML = total_monthly_expense;
 
     const ctx = document.getElementById('incomeChart');
-    const ctx2 = document.getElementById('expenseChart');
-
-    new Chart(ctx, {
+    const incomeChart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: properties,
@@ -194,7 +214,8 @@
     }
     });
 
-    new Chart(ctx2, {
+    const ctx2 = document.getElementById('expenseChart');
+    const expenseChart = new Chart(ctx2, {
     type: 'bar',
     data: {
       labels: properties,
@@ -214,6 +235,54 @@
           "rgba(255, 204, 230, 1)",
           "rgba(255, 204, 230, 1)",
           "rgba(255, 204, 230, 1)",
+        ],
+        borderWidth: 5
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+    });
+
+    const ctx3 = document.getElementById('expenseSpreadChart');
+    const expenseSpreadChart = new Chart(ctx3, {
+    type: 'bar',
+    data: {
+      labels: properties,
+      datasets: [{
+        label: 'Monthly EMI',
+        data: net_emis,
+        backgroundColor: [
+          "rgba(255, 204, 204, 0.7)",
+        ],
+        borderColor: [
+          "rgba(255, 204, 204, 1)"
+        ],
+        borderWidth: 5
+      },
+      {
+        label: 'Monthly Taxes',
+        data: net_taxes,
+        backgroundColor: [
+          "rgba(204, 255, 204, 0.7)",
+        ],
+        borderColor: [
+          "rgba(204, 255, 204, 1)"
+        ],
+        borderWidth: 5
+      },
+      {
+        label: 'Monthly Expenses',
+        data: net_exps,
+        backgroundColor: [
+          "rgba(255, 204, 255, 0.7)",
+        ],
+        borderColor: [
+          "rgba(255, 204, 255, 1)"
         ],
         borderWidth: 5
       }]
